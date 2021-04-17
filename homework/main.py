@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 
 from pydantic import BaseModel
 
@@ -59,3 +59,9 @@ def name_patient(request: NamePatientRq):
 
 #Zad4 / 1.5
 
+@app.get('/patient/{number_pat}')
+def number_patients(number_pat: int):
+	if number_pat in app.patients:
+		return app.patients[number_pat]
+	else:
+		return Response(status_code=204)

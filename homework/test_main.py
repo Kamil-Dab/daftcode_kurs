@@ -42,9 +42,20 @@ def test_name_method_5():
 
 
 def test_patient_name():
-	response = client.post("/patient", json={'name': 'IMIE',"surename": "NAZWISKO"})
+	response = client.post("/patient", json={'name': 'Ala',"surename": "Dabrowska"})
+	#try 1
 	assert response.status_code == 200
-	assert response.json() == {"id": 1, "patient": {"name": "IMIE", "surename": "NAZWISKO"}}
-	response = client.post("/patient", json={'name': 'IMIE',"surename": "NAZWISKO"})
+	assert response.json() == {"id": 1, "patient": {"name": "Ala", "surename": "Dabrowska"}}
+	response = client.post("/patient", json={'name': 'Stas',"surename": "Wisniewski"})
+	#try 2
 	assert response.status_code == 200
-	assert response.json() == {"id": 2, "patient": {"name": "IMIE", "surename": "NAZWISKO"}}
+	assert response.json() == {"id": 2, "patient": {"name": "Stas", "surename": "Wisniewski"}}
+
+
+def test_number_patients():
+	response_get = client.get("/patient/1")
+	#patient 1
+	assert response_get.status_code == 200
+	assert response_get.json() == {"name": "Ala", "surename": "Dabrowska"}
+	response_get = client.get("/patient/3")
+	assert response_get.status_code == 204
